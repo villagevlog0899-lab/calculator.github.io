@@ -1,0 +1,201 @@
+<!<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beautiful Calculator with Ads</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&display=swap');
+
+        :root {
+            --background-color: #2d2d2d;
+            --calculator-bg-color: #1a1a1a;
+            --display-bg-color: #3a3a3a;
+            --button-bg-color: #4a4a4a;
+            --button-hover-bg-color: #6a6a6a;
+            --operator-button-bg-color: #ff9f0a;
+            --operator-button-hover-bg-color: #ffb340;
+            --special-button-bg-color: #7a7a7a;
+            --special-button-hover-bg-color: #9a9a9a;
+            --text-color: #ffffff;
+            --border-radius: 12px;
+            --box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--background-color);
+            font-family: 'Roboto Mono', monospace;
+            margin: 0;
+            padding: 20px 0;
+        }
+
+        .calculator {
+            width: 100%;
+            max-width: 360px;
+            background-color: var(--calculator-bg-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .display {
+            background-color: var(--display-bg-color);
+            color: var(--text-color);
+            padding: 30px 20px;
+            text-align: right;
+            font-size: 2.5rem;
+            font-weight: 500;
+            word-wrap: break-word;
+            word-break: break-all;
+            min-height: 80px;
+        }
+
+        .ad-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+            background-color: #2d2d2d;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+        }
+
+        button {
+            border: none;
+            background-color: var(--button-bg-color);
+            color: var(--text-color);
+            font-size: 1.5rem;
+            padding: 20px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        button:hover {
+            background-color: var(--button-hover-bg-color);
+        }
+
+        button.operator {
+            background-color: var(--operator-button-bg-color);
+        }
+
+        button.operator:hover {
+            background-color: var(--operator-button-hover-bg-color);
+        }
+
+        button.special {
+            background-color: var(--special-button-bg-color);
+        }
+
+        button.special:hover {
+            background-color: var(--special-button-hover-bg-color);
+        }
+        
+        button.equals {
+            grid-column: span 2;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="calculator">
+        <div class="display" id="display">0</div>
+        
+        <div class="ad-container">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '1743e8e6d6f3e311e38fab62c63b3b03',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <!-- === CODE CHANGED HERE === -->
+            <script type="text/javascript" src="https://www.highperformanceformat.com/1743e8e6d6f3e311e38fab62c63b3b03/invoke.js"></script>
+        </div>
+        
+        <div class="buttons">
+            <button class="special" onclick="clearDisplay()">AC</button>
+            <button class="special" onclick="deleteLast()">DEL</button>
+            <button class="special" onclick="appendCharacter('%')">%</button>
+            <button class="operator" onclick="appendCharacter('/')">÷</button>
+            <button onclick="appendCharacter('7')">7</button>
+            <button onclick="appendCharacter('8')">8</button>
+            <button onclick="appendCharacter('9')">9</button>
+            <button class="operator" onclick="appendCharacter('*')">×</button>
+            <button onclick="appendCharacter('4')">4</button>
+            <button onclick="appendCharacter('5')">5</button>
+            <button onclick="appendCharacter('6')">6</button>
+            <button class="operator" onclick="appendCharacter('-')">−</button>
+            <button onclick="appendCharacter('1')">1</button>
+            <button onclick="appendCharacter('2')">2</button>
+            <button onclick="appendCharacter('3')">3</button>
+            <button class="operator" onclick="appendCharacter('+')">+</button>
+            <button onclick="appendCharacter('0')">0</button>
+            <button onclick="appendCharacter('.')">.</button>
+            <button class="operator equals" onclick="calculateResult()">=</button>
+        </div>
+    </div>
+
+    <script>
+        const display = document.getElementById('display');
+        let currentInput = '0';
+
+        function updateDisplay() {
+            display.textContent = currentInput;
+        }
+
+        function clearDisplay() {
+            currentInput = '0';
+            updateDisplay();
+        }
+
+        function deleteLast() {
+            if (currentInput.length > 1) {
+                currentInput = currentInput.slice(0, -1);
+            } else {
+                currentInput = '0';
+            }
+            updateDisplay();
+        }
+
+        function appendCharacter(char) {
+            if (currentInput === '0' && char !== '.') {
+                currentInput = char;
+            } else {
+                if (char === '.' && currentInput.includes('.')) return;
+                currentInput += char;
+            }
+            updateDisplay();
+        }
+
+        function calculateResult() {
+            try {
+                let calculation = currentInput.replace(/×/g, '*').replace(/÷/g, '/');
+                let result = eval(calculation);
+                if (result === Infinity || isNaN(result)) {
+                    currentInput = 'Error';
+                } else {
+                    currentInput = String(result);
+                }
+            } catch (error) {
+                currentInput = 'Error';
+            }
+            updateDisplay();
+        }
+    </script>
+
+</body>
+</html>
